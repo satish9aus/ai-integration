@@ -1,13 +1,16 @@
+"""Helper functions for interacting with the OpenAI API."""
+
 import os
-from openai import OpenAI
+import openai
 from dotenv import load_dotenv
 
 load_dotenv()
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
 def get_completion(prompt, model="gpt-3.5-turbo"):
+    """Get completion from OpenAI API for a given prompt."""
     response = client.chat.completions.create(
         model=model,
         messages=[{"role": "user", "content": prompt}],
@@ -17,6 +20,7 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
 
 
 def get_completion_from_messages(messages, model="gpt-3.5-turbo", temperature=0):
+    """Get completion from OpenAI API for a list of messages."""
     response = client.chat.completions.create(
         model=model,
         messages=messages,
